@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ali Sher — Angular Developer</title>
+<meta name="description" content="Ali Sher — Angular Developer & Frontend Engineer, Karachi, Pakistan. 2.5+ years building enterprise fintech web applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --bg:#0a0e1a;
+  --bg-alt:#0d1220;
+  --surface:#111730;
+  --surface-2:#161d3a;
+  --border:rgba(140,160,255,0.14);
+  --text:#e8ecf7;
+  --text-muted:#8792b3;
+  --blue:#4c7eff;
+  --purple:#8b5cf6;
+  --teal:#22d3b5;
+  --grad: linear-gradient(120deg,var(--blue),var(--purple));
+  --font-display:'Space Grotesk',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --radius:14px;
+  --shadow: 0 20px 60px -20px rgba(76,126,255,0.25);
+}
+[data-theme="light"]{
+  --bg:#f3f5fb;
+  --bg-alt:#eaeef8;
+  --surface:#ffffff;
+  --surface-2:#f5f7fd;
+  --border:rgba(60,70,140,0.14);
+  --text:#141a2e;
+  --text-muted:#5a6480;
+  --shadow: 0 20px 60px -20px rgba(76,126,255,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.6;
+  overflow-x:hidden;
+  transition:background .4s ease,color .4s ease;
+}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+.container{max-width:1180px;margin:0 auto;padding:0 24px;}
+h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-0.02em;}
+.mono{font-family:var(--font-mono);}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--teal);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:14px;
+}
+.eyebrow::before{content:"";width:18px;height:1px;background:var(--teal);display:inline-block;}
+.section-head{max-width:640px;margin-bottom:52px;}
+.section-head h2{font-size:clamp(1.7rem,3vw,2.4rem);margin-bottom:12px;}
+.section-head p{color:var(--text-muted);font-size:1.02rem;}
+section{padding:110px 0;position:relative;}
+.glass{
+  background:linear-gradient(180deg, rgba(140,160,255,0.06), rgba(140,160,255,0.02));
+  border:1px solid var(--border);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-radius:var(--radius);
+}
+
+/* ---------- NAV ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:18px 0;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+}
+header.scrolled{
+  background:rgba(10,14,26,0.72);
+  backdrop-filter:blur(16px);
+  box-shadow:0 8px 30px -20px rgba(0,0,0,0.6);
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+[data-theme="light"] header.scrolled{background:rgba(243,245,251,0.78);}
+nav{display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:var(--font-mono);font-weight:600;font-size:1.05rem;}
+.logo span{color:var(--blue);}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{
+  font-size:0.92rem;color:var(--text-muted);position:relative;padding:4px 0;
+  transition:color .25s;
+}
+.nav-links a:hover, .nav-links a:focus-visible{color:var(--text);}
+.nav-links a::after{
+  content:"";position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--grad);
+  transition:width .25s ease;
+}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex;align-items:center;gap:14px;}
+.icon-btn{
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:transform .2s ease, border-color .2s ease;
+}
+.icon-btn:hover{border-color:var(--blue);transform:translateY(-2px);}
+.hamburger{display:none;}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding-top:120px;
+  position:relative;
+}
+#netCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.55;pointer-events:none;}
+.hero-grid{
+  display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center;position:relative;z-index:2;
+}
+.hero-eyebrow{
+  font-family:var(--font-mono);font-size:0.82rem;color:var(--teal);
+  display:flex;align-items:center;gap:10px;margin-bottom:22px;
+}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(34,211,181,.6);animation:pulse 2s infinite;}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(34,211,181,.5);}
+  70%{box-shadow:0 0 0 10px rgba(34,211,181,0);}
+  100%{box-shadow:0 0 0 0 rgba(34,211,181,0);}
+}
+.hero h1{
+  font-size:clamp(2.4rem,5.2vw,3.9rem);
+  line-height:1.06;
+  margin-bottom:18px;
+}
+.hero h1 .grad{
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.type-line{
+  font-family:var(--font-mono);font-size:clamp(1rem,2vw,1.3rem);color:var(--text-muted);
+  margin-bottom:26px;min-height:1.6em;
+}
+.type-line #typed{color:var(--blue);border-right:2px solid var(--blue);padding-right:3px;}
+.hero p.lead{color:var(--text-muted);max-width:520px;margin-bottom:34px;font-size:1.03rem;}
+.btn-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:44px;}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:10px;
+  font-weight:600;font-size:0.94rem;cursor:pointer;border:1px solid transparent;transition:all .25s ease;
+}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:var(--shadow);}
+.btn-primary:hover{transform:translateY(-3px);filter:brightness(1.08);}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--text);}
+.btn-ghost:hover{border-color:var(--blue);transform:translateY(-3px);}
+.hero-meta{display:flex;gap:34px;flex-wrap:wrap;}
+.hero-meta div{font-family:var(--font-mono);}
+.hero-meta strong{display:block;font-size:1.5rem;font-family:var(--font-display);}
+.hero-meta span{font-size:0.78rem;color:var(--text-muted);}
+
+/* Dashboard signature card */
+.dash-card{padding:26px;position:relative;}
+.dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.dash-title{font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);}
+.dash-dots{display:flex;gap:6px;}
+.dash-dots span{width:9px;height:9px;border-radius:50%;background:var(--border);}
+.dash-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed var(--border);font-family:var(--font-mono);font-size:0.84rem;}
+.dash-row:last-child{border-bottom:none;}
+.dash-row .val{color:var(--teal);font-weight:600;}
+.dash-bar-track{width:100%;height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden;margin-top:16px;}
+.dash-bar-fill{height:100%;border-radius:6px;background:var(--grad);width:0%;transition:width 1.4s cubic-bezier(.2,.8,.2,1);}
+.dash-log{margin-top:18px;font-family:var(--font-mono);font-size:0.72rem;color:var(--text-muted);line-height:1.9;}
+.dash-log .tag{color:var(--blue);}
+.dash-log .ok{color:var(--teal);}
+
+/* ---------- ABOUT ---------- */
+.about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:start;}
+.about-card{padding:32px;}
+.about-card p{color:var(--text-muted);margin-bottom:16px;}
+.info-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px;}
+.info-list li{font-size:0.9rem;}
+.info-list b{display:block;font-family:var(--font-mono);color:var(--text-muted);font-size:0.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+
+/* ---------- SKILLS ---------- */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.skill-card{padding:26px;}
+.skill-card h3{font-size:1.05rem;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.skill-card h3 i{color:var(--blue);}
+.skill-item{margin-bottom:14px;}
+.skill-item-top{display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;color:var(--text-muted);}
+.skill-track{height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden;}
+.skill-fill{height:100%;border-radius:6px;background:var(--grad);width:0%;transition:width 1.2s ease;}
+
+/* ---------- EXPERIENCE TIMELINE ---------- */
+.timeline{position:relative;padding-left:36px;}
+.timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--blue),var(--purple));}
+.tl-item{position:relative;padding-bottom:46px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{position:absolute;left:-36px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--blue);}
+.tl-item.current .tl-dot{border-color:var(--teal);box-shadow:0 0 0 4px rgba(34,211,181,0.15);}
+.tl-card{padding:24px 28px;}
+.tl-card .role{font-size:1.1rem;margin-bottom:2px;}
+.tl-card .meta{font-family:var(--font-mono);font-size:0.78rem;color:var(--teal);margin-bottom:14px;display:block;}
+.tl-card ul{color:var(--text-muted);font-size:0.92rem;display:grid;gap:6px;}
+.tl-card ul li::before{content:"▸ ";color:var(--blue);}
+
+/* ---------- PROJECTS ---------- */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.project-card{padding:0;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease, border-color .3s ease;}
+.project-card:hover{transform:translateY(-6px);border-color:var(--blue);}
+.project-thumb{
+  height:150px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);
+  font-size:2rem;color:rgba(255,255,255,0.85);position:relative;overflow:hidden;
+}
+.project-thumb::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), transparent 60%);}
+.p1 .project-thumb{background:linear-gradient(135deg,#3a4fd6,#7a3ce0);}
+.p2 .project-thumb{background:linear-gradient(135deg,#1f8fae,#3a4fd6);}
+.p3 .project-thumb{background:linear-gradient(135deg,#7a3ce0,#c23d8e);}
+.project-body{padding:22px 24px;flex:1;display:flex;flex-direction:column;}
+.project-body h3{font-size:1.08rem;margin-bottom:8px;}
+.project-body p{color:var(--text-muted);font-size:0.88rem;flex:1;margin-bottom:16px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.tag{font-family:var(--font-mono);font-size:0.7rem;padding:4px 9px;border-radius:6px;background:var(--surface-2);color:var(--blue);border:1px solid var(--border);}
+.proj-links{display:flex;gap:14px;}
+.proj-links a{font-size:0.82rem;display:flex;align-items:center;gap:6px;color:var(--text-muted);transition:color .2s;}
+.proj-links a:hover{color:var(--blue);}
+
+/* ---------- SERVICES ---------- */
+.services-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+.service-card{padding:26px 20px;text-align:left;transition:transform .25s ease, border-color .25s ease;}
+.service-card:hover{transform:translateY(-5px);border-color:var(--purple);}
+.service-card i{font-size:1.5rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px;display:block;}
+.service-card h4{font-size:0.95rem;margin-bottom:8px;}
+.service-card p{font-size:0.8rem;color:var(--text-muted);}
+
+/* ---------- EDU / CERTS ---------- */
+.edu-cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.edu-card{padding:28px;display:flex;gap:20px;align-items:flex-start;}
+.edu-card i{font-size:1.6rem;color:var(--blue);margin-top:2px;}
+.edu-card h3{font-size:1.05rem;margin-bottom:4px;}
+.edu-card span{font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);}
+.certs-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.cert-card{padding:18px;text-align:center;color:var(--text-muted);font-size:0.82rem;}
+.cert-card i{display:block;font-size:1.3rem;color:var(--purple);margin-bottom:8px;}
+
+/* ---------- CONTACT ---------- */
+.contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;}
+.contact-info-card{padding:30px;}
+.contact-info-card h3{margin-bottom:20px;font-size:1.15rem;}
+.contact-line{display:flex;align-items:center;gap:14px;margin-bottom:18px;font-size:0.92rem;}
+.contact-line i{width:38px;height:38px;border-radius:9px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--blue);}
+.social-row{display:flex;gap:12px;margin-top:26px;}
+form.glass{padding:32px;display:grid;gap:18px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+label{font-size:0.78rem;font-family:var(--font-mono);color:var(--text-muted);margin-bottom:6px;display:block;}
+input,textarea{
+  width:100%;padding:12px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;
+  color:var(--text);font-family:var(--font-body);font-size:0.92rem;outline:none;transition:border-color .2s;
+}
+input:focus,textarea:focus{border-color:var(--blue);}
+textarea{resize:vertical;min-height:110px;}
+.form-note{font-size:0.76rem;color:var(--text-muted);}
+
+/* ---------- FOOTER ---------- */
+footer{padding:40px 0;border-top:1px solid var(--border);}
+.footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-social{display:flex;gap:12px;}
+.footer-row p{font-size:0.82rem;color:var(--text-muted);}
+
+/* ---------- SCROLL TOP ---------- */
+#scrollTop{
+  position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:50%;
+  background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s, transform .3s;z-index:900;box-shadow:var(--shadow);
+}
+#scrollTop.show{opacity:1;pointer-events:auto;}
+#scrollTop:hover{transform:translateY(-4px);}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;}
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:980px){
+  .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:1fr 1fr;}
+  .projects-grid{grid-template-columns:1fr 1fr;}
+  .services-grid{grid-template-columns:1fr 1fr 1fr;}
+  .edu-cert-grid{grid-template-columns:1fr;}
+}
+@media(max-width:720px){
+  .nav-links{
+    position:fixed;top:0;right:-100%;height:100vh;width:min(78vw,320px);
+    background:var(--bg-alt);flex-direction:column;justify-content:center;gap:30px;
+    transition:right .35s ease;border-left:1px solid var(--border);
+  }
+  .nav-links.open{right:0;}
+  .hamburger{display:flex;}
+  .skills-grid,.projects-grid,.services-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .info-list{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgParticles" style="position:fixed;inset:0;z-index:-1;opacity:0.25;"></canvas>
+
+<header id="siteHeader">
+  <div class="container">
+    <nav>
+      <a href="#home" class="logo">ali<span>Sher</span>.dev</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle light and dark theme"><i class="fa-solid fa-moon"></i></button>
+        <button class="icon-btn hamburger" id="hamburger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <canvas id="netCanvas"></canvas>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow"><span class="status-dot"></span> AVAILABLE FOR NEW ROLES · KARACHI, PK</div>
+        <h1>Building enterprise‑grade <span class="grad">Angular</span> systems that banks run on.</h1>
+        <div class="type-line">&gt; <span id="typed"></span></div>
+        <p class="lead">Angular Developer with 2.5+ years shipping responsive, scalable frontends for a live financial gateway platform — reactive forms, auth flows, and REST integrations that hold up in production.</p>
+        <div class="btn-row">
+          <a href="#" class="btn btn-primary" id="downloadResume"><i class="fa-solid fa-download"></i> Download Resume</a>
+          <a href="#contact" class="btn btn-ghost"><i class="fa-regular fa-paper-plane"></i> Contact Me</a>
+        </div>
+        <div class="hero-meta">
+          <div><strong><span class="counter" data-target="2.5">0</span>+</strong><span>Years Experience</span></div>
+          <div><strong><span class="counter" data-target="3">0</span></strong><span>Modules Shipped</span></div>
+          <div><strong><span class="counter" data-target="15">0</span>+</strong><span>APIs Integrated</span></div>
+        </div>
+      </div>
+
+      <div class="glass dash-card reveal">
+        <div class="dash-top">
+          <span class="dash-title">bridge-gateway · live status</span>
+          <div class="dash-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="dash-row"><span>Frontend</span><span class="val">Angular 19</span></div>
+        <div class="dash-row"><span>Auth</span><span class="val">JWT · Guards ✓</span></div>
+        <div class="dash-row"><span>Uptime</span><span class="val">99.9%</span></div>
+        <div class="dash-bar-track"><div class="dash-bar-fill" id="dashBar"></div></div>
+        <div class="dash-log">
+          <div><span class="tag">[POST]</span> /api/merchant/verify <span class="ok">200 OK</span></div>
+          <div><span class="tag">[GET]</span> /api/fraud/status <span class="ok">200 OK</span></div>
+          <div><span class="tag">[PATCH]</span> /api/customer/geo <span class="ok">200 OK</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">About</div>
+      <h2>Frontend engineer, banking-systems mindset</h2>
+      <p>I care about the parts of an app that don't show up in a demo: validation that actually holds, error states that make sense, and forms that don't break in production.</p>
+    </div>
+    <div class="about-grid">
+      <div class="glass about-card reveal">
+        <p>I'm Ali Sher, an Angular Developer based in Karachi, Pakistan, currently building frontend features for Bridge — a banking repository and gateway platform used across merchant, customer, and agent workflows.</p>
+        <p>Outside my full-time role, I take on freelance frontend projects, translating designs into responsive interfaces and integrating them with real APIs for international clients.</p>
+        <ul class="info-list">
+          <li><b>Location</b>Karachi, Pakistan</li>
+          <li><b>Focus</b>Angular · TypeScript · REST</li>
+          <li><b>Education</b>BSCS, 2019–2023</li>
+          <li><b>Freelance</b>Fiverr, since 2023</li>
+        </ul>
+      </div>
+      <div class="glass about-card reveal">
+        <p><strong>How I work:</strong> most of my recent work sits at the intersection of Angular reactive forms, C# ASP.NET Core services, and the validation rules underneath them. When a stored procedure needs a new field, I trace it end-to-end — form control, DTO, and error message — so nothing silently breaks downstream.</p>
+        <p>I've also spent time hardening existing code: reducing complexity flagged by static analysis, fixing exception handlers that were quietly swallowing errors, and making sure the message a user sees on screen actually matches what went wrong on the backend.</p>
+        <p>I like tools that get out of the way — Git, Postman, VS Code — and interfaces that don't need a manual.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Skills</div>
+      <h2>What I build with</h2>
+      <p>A frontend-first toolkit, backed by enough backend and tooling fluency to ship a feature end-to-end.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="glass skill-card reveal">
+        <h3><i class="fa-brands fa-angular"></i> Frontend</h3>
+        <div class="skill-item"><div class="skill-item-top"><span>Angular</span><span>95%</span></div><div class="skill-track"><div class="skill-fill" data-width="95"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>TypeScript</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>HTML5 / CSS3 / SCSS</span><span>92%</span></div><div class="skill-track"><div class="skill-fill" data-width="92"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>Bootstrap / Angular Material</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
+      </div>
+      <div class="glass skill-card reveal">
+        <h3><i class="fa-solid fa-diagram-project"></i> Angular Core</h3>
+        <div class="skill-item"><div class="skill-item-top"><span>Reactive Forms & Routing</span><span>93%</span></div><div class="skill-track"><div class="skill-fill" data-width="93"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>Guards & Services / DI</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>RxJS & HTTP Client</span><span>87%</span></div><div class="skill-track"><div class="skill-fill" data-width="87"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>Signals & Lazy Loading</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-width="80"></div></div></div>
+      </div>
+      <div class="glass skill-card reveal">
+        <h3><i class="fa-solid fa-server"></i> Backend & Tools</h3>
+        <div class="skill-item"><div class="skill-item-top"><span>ASP.NET Core Web API</span><span>82%</span></div><div class="skill-track"><div class="skill-fill" data-width="82"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>JWT Authentication</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>Git / Azure DevOps</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-item-top"><span>Postman / REST APIs</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Experience</div>
+      <h2>Where I've worked</h2>
+      <p>Two years of full-time enterprise work, plus a year of freelance client delivery before that.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item current reveal">
+        <div class="tl-dot"></div>
+        <div class="glass tl-card">
+          <div class="role">Angular Developer · 1LINK (Pvt) Limited</div>
+          <span class="meta">Feb 2024 — Present · Karachi, Pakistan</span>
+          <ul>
+            <li>Developed enterprise Angular applications and reusable UI components</li>
+            <li>Integrated REST APIs using Angular HttpClient</li>
+            <li>Built Reactive Forms with custom validation</li>
+            <li>Implemented routing, guards, and authentication</li>
+            <li>Optimized UI performance and resolved production issues</li>
+            <li>Collaborated with backend developers and SQA during UAT and deployments</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="glass tl-card">
+          <div class="role">Frontend Developer (Freelance) · Fiverr</div>
+          <span class="meta">Apr 2023 — Feb 2024</span>
+          <ul>
+            <li>Built responsive Angular single-page applications</li>
+            <li>Converted UI designs into responsive interfaces</li>
+            <li>Integrated APIs and delivered client-focused frontend solutions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Projects</div>
+      <h2>Selected work</h2>
+      <p>Real modules from a live financial gateway system, plus freelance delivery work.</p>
+    </div>
+    <div class="projects-grid">
+      <div class="glass project-card p1 reveal">
+        <div class="project-thumb"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="project-body">
+          <h3>Negative Customer List System</h3>
+          <p>Enterprise fraud-management module: Angular UI wired to secure REST APIs for flagging and reviewing high-risk customers.</p>
+          <div class="tag-row"><span class="tag">Angular</span><span class="tag">REST API</span><span class="tag">Reactive Forms</span></div>
+          <div class="proj-links"><a href="#"><i class="fa-brands fa-github"></i> Code</a><a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a></div>
+        </div>
+      </div>
+      <div class="glass project-card p2 reveal">
+        <div class="project-thumb"><i class="fa-solid fa-gauge-high"></i></div>
+        <div class="project-body">
+          <h3>Hourly Limit Dashboard</h3>
+          <p>Responsive dashboard for monitoring inter-bank transaction limits in near real time, built for operations teams.</p>
+          <div class="tag-row"><span class="tag">Angular</span><span class="tag">Charts</span><span class="tag">RxJS</span></div>
+          <div class="proj-links"><a href="#"><i class="fa-brands fa-github"></i> Code</a><a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a></div>
+        </div>
+      </div>
+      <div class="glass project-card p3 reveal">
+        <div class="project-thumb"><i class="fa-solid fa-users-gear"></i></div>
+        <div class="project-body">
+          <h3>Customer Management System</h3>
+          <p>Responsive CRUD application for customer records, built with Angular on the frontend and ASP.NET Core on the backend.</p>
+          <div class="tag-row"><span class="tag">Angular</span><span class="tag">ASP.NET Core</span><span class="tag">CRUD</span></div>
+          <div class="proj-links"><a href="#"><i class="fa-brands fa-github"></i> Code</a><a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Services</div>
+      <h2>How I can help</h2>
+      <p>Frontend-focused, but comfortable enough with the backend to see a feature through end-to-end.</p>
+    </div>
+    <div class="services-grid">
+      <div class="glass service-card reveal"><i class="fa-brands fa-angular"></i><h4>Angular Development</h4><p>Standalone components, routing, and state that scale past the demo.</p></div>
+      <div class="glass service-card reveal"><i class="fa-solid fa-layer-group"></i><h4>Frontend Development</h4><p>Clean, maintainable UI code built for handoff and long-term upkeep.</p></div>
+      <div class="glass service-card reveal"><i class="fa-solid fa-plug"></i><h4>REST API Integration</h4><p>Reliable HttpClient services, error handling, and auth flows.</p></div>
+      <div class="glass service-card reveal"><i class="fa-solid fa-mobile-screen"></i><h4>Responsive Web Design</h4><p>Interfaces that hold up from a 4K monitor down to a small phone.</p></div>
+      <div class="glass service-card reveal"><i class="fa-solid fa-wand-magic-sparkles"></i><h4>UI Implementation</h4><p>Turning a design file into pixel-accurate, accessible markup.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION & CERTS -->
+<section id="education" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Education & Certifications</div>
+      <h2>Background</h2>
+    </div>
+    <div class="edu-cert-grid">
+      <div class="glass edu-card reveal">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <div>
+          <h3>BS Computer Science</h3>
+          <span>Shah Abdul Latif University, Khairpur · 2019 – 2023</span>
+        </div>
+      </div>
+      <div class="certs-list reveal">
+        <div class="glass cert-card"><i class="fa-solid fa-certificate"></i>Certification placeholder</div>
+        <div class="glass cert-card"><i class="fa-solid fa-certificate"></i>Certification placeholder</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Contact</div>
+      <h2>Let's work together</h2>
+      <p>Open to full-time roles and freelance frontend projects. Reach out and I'll get back to you shortly.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="glass contact-info-card reveal">
+        <h3>Get in touch</h3>
+        <div class="contact-line"><i class="fa-solid fa-envelope"></i> alisherbhutto129@gmail.com</div>
+        <div class="contact-line"><i class="fa-solid fa-phone"></i> +92 341 0654299</div>
+        <div class="contact-line"><i class="fa-solid fa-location-dot"></i> Karachi, Pakistan</div>
+        <div class="social-row">
+          <a href="#" class="icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="icon-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon-btn" aria-label="Fiverr"><i class="fa-brands fa-fiverr"></i></a>
+        </div>
+      </div>
+      <form class="glass reveal" id="contactForm">
+        <div class="form-row">
+          <div><label for="name">Name</label><input id="name" type="text" placeholder="Your name" required></div>
+          <div><label for="email">Email</label><input id="email" type="email" placeholder="you@example.com" required></div>
+        </div>
+        <div><label for="subject">Subject</label><input id="subject" type="text" placeholder="What's this about?" required></div>
+        <div><label for="message">Message</label><textarea id="message" placeholder="Tell me about your project..." required></textarea></div>
+        <button type="submit" class="btn btn-primary" style="justify-self:start;"><i class="fa-regular fa-paper-plane"></i> Send Message</button>
+        <p class="form-note" id="formNote"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-row">
+    <p>© <span id="year"></span> Ali Sher. Built with Angular, care, and a healthy respect for validation edge cases.</p>
+    <div class="footer-social">
+      <a href="#" class="icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#" class="icon-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="#" class="icon-btn" aria-label="Fiverr"><i class="fa-brands fa-fiverr"></i></a>
+    </div>
+  </div>
+</footer>
+
+<div id="scrollTop" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></div>
+
+<script>
+/* ---------- Theme toggle ---------- */
+const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+themeToggle.addEventListener('click', ()=>{
+  const isLight = root.getAttribute('data-theme') === 'light';
+  root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  themeToggle.innerHTML = isLight ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+});
+
+/* ---------- Mobile nav ---------- */
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', ()=> navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>navLinks.classList.remove('open')));
+
+/* ---------- Header scroll state ---------- */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', ()=>{
+  header.classList.toggle('scrolled', window.scrollY > 40);
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 500);
+});
+
+/* ---------- Scroll to top ---------- */
+document.getElementById('scrollTop').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+/* ---------- Typing effect ---------- */
+const roles = ["Angular Developer", "Frontend Engineer", "Frontend Developer", "Fintech UI Specialist"];
+const typedEl = document.getElementById('typed');
+let ri=0, ci=0, deleting=false;
+function type(){
+  const word = roles[ri];
+  typedEl.textContent = deleting ? word.slice(0, ci--) : word.slice(0, ci++);
+  if(!deleting && ci === word.length+1){ deleting = true; setTimeout(type, 1400); return; }
+  if(deleting && ci === 0){ deleting = false; ri = (ri+1)%roles.length; }
+  setTimeout(type, deleting ? 40 : 85);
+}
+type();
+
+/* ---------- Counters ---------- */
+function animateCounters(){
+  document.querySelectorAll('.counter').forEach(el=>{
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = target % 1 !== 0;
+    let cur = 0;
+    const step = target/40;
+    const tick = ()=>{
+      cur += step;
+      if(cur >= target){ el.textContent = isDecimal ? target.toFixed(1) : target; return; }
+      el.textContent = isDecimal ? cur.toFixed(1) : Math.floor(cur);
+      requestAnimationFrame(tick);
+    };
+    tick();
+  });
+}
+
+/* ---------- Reveal on scroll + triggered fills ---------- */
+const revealEls = document.querySelectorAll('.reveal');
+const skillFills = document.querySelectorAll('.skill-fill');
+const dashBar = document.getElementById('dashBar');
+let countersDone=false, skillsDone=false, dashDone=false;
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      if(entry.target.closest('.hero') && !countersDone){ countersDone=true; animateCounters(); }
+      if(entry.target.closest('.hero') && !dashDone){ dashDone=true; setTimeout(()=>dashBar.style.width='92%',300); }
+      if(entry.target.closest('#skills') && !skillsDone){
+        skillsDone = true;
+        skillFills.forEach(f=> f.style.width = f.dataset.width + '%');
+      }
+    }
+  });
+},{threshold:0.2});
+revealEls.forEach(el=>io.observe(el));
+
+/* ---------- Contact form (static demo) ---------- */
+document.getElementById('contactForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  document.getElementById('formNote').textContent = "Thanks — this is a static demo form. Email me directly at alisherbhutto129@gmail.com.";
+});
+
+/* ---------- Download resume placeholder ---------- */
+document.getElementById('downloadResume').addEventListener('click', (e)=>{
+  e.preventDefault();
+  alert('Add your resume PDF link here to enable downloads.');
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------- Hero network canvas (API-node motif) ---------- */
+const netCanvas = document.getElementById('netCanvas');
+const nctx = netCanvas.getContext('2d');
+let nw, nh, nodes=[];
+function sizeNet(){
+  const rect = netCanvas.parentElement.getBoundingClientRect();
+  nw = netCanvas.width = rect.width;
+  nh = netCanvas.height = rect.height;
+}
+function initNodes(){
+  nodes = [];
+  const count = Math.min(50, Math.floor((nw*nh)/22000));
+  for(let i=0;i<count;i++){
+    nodes.push({
+      x:Math.random()*nw, y:Math.random()*nh,
+      vx:(Math.random()-0.5)*0.35, vy:(Math.random()-0.5)*0.35
+    });
+  }
+}
+function drawNet(){
+  nctx.clearRect(0,0,nw,nh);
+  nodes.forEach(n=>{
+    n.x+=n.vx; n.y+=n.vy;
+    if(n.x<0||n.x>nw) n.vx*=-1;
+    if(n.y<0||n.y>nh) n.vy*=-1;
+  });
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const a=nodes[i], b=nodes[j];
+      const d = Math.hypot(a.x-b.x, a.y-b.y);
+      if(d < 130){
+        nctx.strokeStyle = `rgba(76,126,255,${(1-d/130)*0.35})`;
+        nctx.lineWidth = 1;
+        nctx.beginPath(); nctx.moveTo(a.x,a.y); nctx.lineTo(b.x,b.y); nctx.stroke();
+      }
+    }
+  }
+  nodes.forEach(n=>{
+    nctx.beginPath();
+    nctx.arc(n.x,n.y,2,0,Math.PI*2);
+    nctx.fillStyle = 'rgba(139,92,246,0.85)';
+    nctx.fill();
+  });
+  requestAnimationFrame(drawNet);
+}
+function setupNet(){ sizeNet(); initNodes(); }
+setupNet();
+window.addEventListener('resize', setupNet);
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ drawNet(); }
+
+/* ---------- Ambient background particles (subtle, page-wide) ---------- */
+const bgCanvas = document.getElementById('bgParticles');
+const bctx = bgCanvas.getContext('2d');
+let bw,bh,bp=[];
+function sizeBg(){ bw=bgCanvas.width=window.innerWidth; bh=bgCanvas.height=document.body.scrollHeight; }
+function initBg(){
+  bp=[];
+  const count = Math.floor((bw*bh)/90000);
+  for(let i=0;i<count;i++){
+    bp.push({x:Math.random()*bw, y:Math.random()*bh, r:Math.random()*1.6+0.4, vy:Math.random()*0.15+0.03});
+  }
+}
+function drawBg(){
+  bctx.clearRect(0,0,bw,bh);
+  bp.forEach(p=>{
+    p.y -= p.vy;
+    if(p.y < 0) p.y = bh;
+    bctx.beginPath();
+    bctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    bctx.fillStyle = 'rgba(76,126,255,0.5)';
+    bctx.fill();
+  });
+  requestAnimationFrame(drawBg);
+}
+sizeBg(); initBg();
+window.addEventListener('resize', ()=>{ sizeBg(); initBg(); });
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ drawBg(); }
+</script>
+</body>
+</html>
